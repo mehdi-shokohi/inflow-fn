@@ -10,16 +10,16 @@ const (
 	defaultPage    = 1
 	defaultPerPage = 5
 )
-type Response struct {
-	Data  interface{} `json:"data"`
-	Error interface{} `json:"error"`
-}
+// type Response struct {
+// 	Data  interface{} `json:"data"`
+// 	Error interface{} `json:"error"`
+// }
 
-type Error struct {
-	Code    int         `json:"code"`
-	Message string      `json:"message"`
-	Data    interface{} `json:"data"`
-}
+// type Error struct {
+// 	Code    int         `json:"code"`
+// 	Message string      `json:"message"`
+// 	Data    interface{} `json:"data"`
+// }
 
 type ValidationError struct {
 	Field string
@@ -49,6 +49,10 @@ func (i *PaginationParams) Validate() error {
 }
 
 
-func Send(c *fiber.Ctx, Code int, Data interface{}, Error interface{}) error {
-	return c.Status(Code).JSON(Response{Data: Data, Error: Error})
+func Send(c *fiber.Ctx, Code int, Data interface{}) error {
+	root := map[string]interface{}{}
+	if Data!=nil{
+		root["_root"] = Data
+	}
+	return c.Status(Code).JSON(root)
 }

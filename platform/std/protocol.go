@@ -7,8 +7,8 @@ import (
 )
 type IAction interface{
 	Run(*fiber.Ctx)(error)
-	SetConfig(*fiber.Ctx)(error)
-	GetConfig(*fiber.Ctx)(error)
+	FnArguments(*fiber.Ctx)(error)
+	Settings(*fiber.Ctx)(error)
 }
 
 

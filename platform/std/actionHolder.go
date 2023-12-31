@@ -13,7 +13,7 @@ func RegisterCommand(actionId string,action IAction,defineHelp Describe){
 		actions = make(map[string]IAction)
 	}
 	// validate action name
-	
+	//save help on file
 	actions[actionId]=action
 
 }

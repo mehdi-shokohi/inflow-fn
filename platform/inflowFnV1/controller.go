@@ -10,12 +10,35 @@ func actionHandlers(c *fiber.Ctx)error{
 	action:=c.Params("action")
 	fn:=std.GetAction(action)
 	if fn==nil{
-		return std.Send(c,fiber.StatusNotFound,nil,fiber.ErrNotFound)
+		return std.Send(c,fiber.StatusNotFound,nil)
 	}
 	return fn.Run(c)
 
 }
 
-func getActions(c *fiber.Ctx)error{
-	return c.JSON(std.GetActions())
+func describeHandler(c *fiber.Ctx)error{
+	nameParam:=c.Params("name")
+	if nameParam=="all"{
+		//return All Commands doc
+		return std.Send(c,fiber.StatusOK,std.GetActions())
+	}
+	return nil
+}
+
+func getActionApplication(c *fiber.Ctx)error{
+	action:=c.Params("action")
+	fn:=std.GetAction(action)
+	if fn==nil{
+		return std.Send(c,fiber.StatusNotFound,nil)
+	}
+	return fn.FnArguments(c)
+}
+
+func settingsHandler(c *fiber.Ctx)error{
+	action:=c.Params("action")
+	fn:=std.GetAction(action)
+	if fn==nil{
+		return std.Send(c,fiber.StatusNotFound,nil)
+	}
+	return fn.Settings(c)
 }
