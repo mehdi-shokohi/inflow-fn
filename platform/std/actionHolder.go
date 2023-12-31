@@ -1,14 +1,16 @@
 package std
 
-import "github.com/gofiber/fiber/v2"
+import (
+
+)
 
 
-var actions map[string]func(*fiber.Ctx)error
+var actions map[string]IAction
 
 
-func RegisterCommand(actionId string,action func(ctx *fiber.Ctx)error){
+func RegisterCommand(actionId string,action IAction,defineHelp Describe){
 	if actions==nil{
-		actions = make(map[string]func(*fiber.Ctx) error)
+		actions = make(map[string]IAction)
 	}
 	// validate action name
 	
@@ -16,9 +18,9 @@ func RegisterCommand(actionId string,action func(ctx *fiber.Ctx)error){
 
 }
 
-func GetActionFunc(key string)func(*fiber.Ctx)error{
+func GetAction(key string)IAction{
 	if actions==nil{
-		actions = make(map[string]func(*fiber.Ctx) error)
+		actions = make(map[string]IAction)
 
 	}
 	if f,ok:= actions[key];ok{
@@ -28,7 +30,7 @@ func GetActionFunc(key string)func(*fiber.Ctx)error{
 }
 func GetActions()[]string{
 	if actions==nil{
-		actions = make(map[string]func(*fiber.Ctx) error)
+		actions = make(map[string]IAction)
 
 	}
 	actList:=make([]string,0)

@@ -8,11 +8,12 @@ import (
 
 func actionHandlers(c *fiber.Ctx)error{
 	action:=c.Params("action")
-	fn:=std.GetActionFunc(action)
-	if fn!=nil{
-		return fn(c)
+	fn:=std.GetAction(action)
+	if fn==nil{
+		return std.Send(c,fiber.StatusNotFound,nil,fiber.ErrNotFound)
 	}
-	return std.Send(c,fiber.StatusNotFound,nil,fiber.ErrNotFound)
+	return fn.Run(c)
+
 }
 
 func getActions(c *fiber.Ctx)error{

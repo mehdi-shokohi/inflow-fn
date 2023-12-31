@@ -3,8 +3,20 @@ package std
 import (
 
 	"github.com/gofiber/fiber/v2"
-)
 
+)
+type IAction interface{
+	Run(*fiber.Ctx)(error)
+	SetConfig(*fiber.Ctx)(error)
+	GetConfig(*fiber.Ctx)(error)
+}
+
+
+//command for some action
+
+//access to db 
+//find db by name 
+//restart policy on doc
 func GetBodyAs[T any](ctx *fiber.Ctx)(*T,error){
 	inputForm := ProtocolBodyV1[T]{}
 	if err := ctx.BodyParser(&inputForm); err != nil {
