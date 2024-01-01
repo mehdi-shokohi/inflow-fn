@@ -2,6 +2,7 @@ package getArgs
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/log"
 	"github.com/mehdi-shokohi/inflow-fn/platform/std"
 )
 
@@ -12,7 +13,12 @@ func (a *MyAction) Run(c *fiber.Ctx) error {
 	if err != nil {
 		return c.JSON(fiber.ErrBadRequest)
 	}
+	db:=std.GetDefaultDb(c.Context(),"test",body)
 
+	_,err=db.Insert()
+	if err!=nil{
+		log.Errorf("%v",err)
+	}
 	return std.Send(c, fiber.StatusOK, body)
 }
 

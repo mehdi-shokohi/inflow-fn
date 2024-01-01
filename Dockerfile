@@ -1,6 +1,7 @@
-FROM golang:1.20-alpine
+FROM golang:1.21-alpine
 
 WORKDIR /project
+ENV GOPROXY https:\/\/goproxy.cn
 
 COPY . .
 RUN go mod download
